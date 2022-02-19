@@ -65,7 +65,7 @@ package-lock.json
 yarn.lock
 
 .DS_Store
-.vscode
+.vscodecd 
 *.xslx
 
 # vscode specific files
