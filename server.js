@@ -60,31 +60,7 @@ app.post('/api/notes', (req, res) => {
   })
 });
 
-// app.delete('/api/notes/:id', (req, res) => {
 
-//   if (req.params.id) {
-//       const noteId = req.params.id;
-
-//       // read file then delete note with matching id
-//     fs.readFileAsync('./db/db.json', 'utf8').then((data) => {
-//       const saveNotes = JSON.parse(data); // save db.json data into an array
-
-//       for (let i = 0; i < savedNotes.length; i++) {
-//         if (savedNotes[i].id === noteId) {
-//           savedNotes.splice([i], 1);
-        
-//           break; // stop iterating once a unique id is found
-//         };
-//       };
-
-//       overwriteDBFile(savedNotes); // save the new data to db.json
-//     }).then((savedNotes) => {
-//       writeFileAsync("./db/db.json", JSON.stringify(savedNotes))
-  
-//       res.json(savedNotes);
-//     })
-//   }
-// });
 
 
 // API DELETE Route 
