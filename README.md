@@ -21,10 +21,10 @@ After installing these, javascript has to be run from terminal through node in o
 This app will be deployed to heroku as well; therefore making it  easier to access from a public terminal.
 
 ### Screen Shots of Installation Steps 
-![Opening home Page]()
+![Opening home Page](https://user-images.githubusercontent.com/94323045/155391896-e898c980-f236-4d0c-ba20-27e5e57f3281.jpg)
 
 
-![Add Notes Page]()
+![Add Notes Page](https://user-images.githubusercontent.com/94323045/155392246-1e724a0d-1b6e-401e-a8a6-1c8c0c3c33a6.jpg)
 
 
 
@@ -86,8 +86,11 @@ routes
 
 ## Questions
 
- A video for previewing the usage of this application can be found in the following link 
   [Deployed-Application Here]()
+
+ A video for previewing the usage of this application can be found in the following link 
+ [Video Demonstration of Quick-Notes](https://www.youtube.com/watch?v=QSTwB3tvGS4)
+
   Any additional Questions feel free to email me at: TylerBGandy@gmail.com
   
   
