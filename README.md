@@ -10,7 +10,8 @@ This application is primarily used to run javascript code from the back-end in o
 - [Usage](#usage)
 - [Acceptance Criteria](#criteria)
 - [Credits](#credits)
-- [License](#license)
+- [Deployed Application](#deployed)
+ -[Questions](#questions)
 
 ## Installation
 
@@ -82,11 +83,13 @@ API DELETE
 routes
 
 
+## Deployed
 
+ [Deployed-Application Here](https://quick-notes-application.herokuapp.com/)
 
 ## Questions
 
-  [Deployed-Application Here]()
+ 
 
  A video for previewing the usage of this application can be found in the following link 
  [Video Demonstration of Quick-Notes](https://www.youtube.com/watch?v=QSTwB3tvGS4)
