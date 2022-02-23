@@ -1,67 +1,121 @@
 const express = require('express');
+const app = express();
 const path = require('path');
-const fs = require('fs');
 const util = require('util');
-const noteData = require('./db/db.json')
-// const api = require('./routes/index.js')
+const fs = require('fs');
+const { v4: uuidv4 } = require('uuid')
 
-// const { clog } = require('./middleware/clog');
-// const api = require('./assets/index.js');
+
+
+const PORT = process.env.PORT || 3001;
+
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
 
-const PORT = process.env.PORT || 3001;
-
-const app = express();
-
-// Import custom middleware, "cLog"
-// app.use(clog);
-
-// Middleware for parsing JSON and urlencoded form data
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-// app.use('/api', api);
-
-app.use(express.static('./develop/public'));
-
-// API GET Route 
-app.get('/api/notes', (req, res) =>
-    readFileAsync("./db/db.json", "utf-8").then((data) => {
-        notes = [].concat(JSON.parse(data))
-        res.json(notes)
-    } )
-);
-
-// API POST Route 
-app.post('/api/notes', (req, res) =>{
-        const note = req.body;
-    readFileAsync("./db/db.json", "utf-8").then((data) => {
-         const notes = [].concat(JSON.parse(data));
-         note.id = notes.length++
-         notes.push(note);
-         return notes
-    }).then((notes) =>{
-        writeFileAsync("./db/db.json", JSON.stringify(notes))
-        res.json(note);
-    })
-});
 
 // GET Route for homepage
 app.get('/', (req, res) =>
-  res.sendFile(path.join(__dirname, '/develop/public/index.html'))
+  res.sendFile(path.join(__dirname, './public/index.html'))
 );
 
 // GET Route for notes page
 app.get('/notes', (req, res) =>
-  res.sendFile(path.join(__dirname, '/develop/public/notes.html'))
+  res.sendFile(path.join(__dirname, './public/notes.html'))
 );
+
+
+app.get('/api/notes', (req, res) =>
+  readFileAsync("./db/db.json", "utf-8").then((data) => {
+    notes = [].concat(JSON.parse(data))
+    res.json(notes)
+  })
+);
+
+app.post('/api/notes', (req, res) => {
+  // const { title, text,} = req.body;
+
+  const note = {
+    title: req.body.title,
+    text: req.body.text,
+    id: uuidv4()
+  };
+
+  readFileAsync("./db/db.json", "utf8").then((data) => {
+    // let notes = [].concat(JSON.parse(data));
+    let savedNotes = JSON.parse(data)
+    savedNotes.push(note)
+
+
+    return savedNotes
+  }).then((savedNotes) => {
+    writeFileAsync("./db/db.json", JSON.stringify(savedNotes))
+
+    res.json(savedNotes);
+  })
+});
+
+// app.delete('/api/notes/:id', (req, res) => {
+
+//   if (req.params.id) {
+//       const noteId = req.params.id;
+
+//       // read file then delete note with matching id
+//     fs.readFileAsync('./db/db.json', 'utf8').then((data) => {
+//       const saveNotes = JSON.parse(data); // save db.json data into an array
+
+//       for (let i = 0; i < savedNotes.length; i++) {
+//         if (savedNotes[i].id === noteId) {
+//           savedNotes.splice([i], 1);
+        
+//           break; // stop iterating once a unique id is found
+//         };
+//       };
+
+//       overwriteDBFile(savedNotes); // save the new data to db.json
+//     }).then((savedNotes) => {
+//       writeFileAsync("./db/db.json", JSON.stringify(savedNotes))
+  
+//       res.json(savedNotes);
+//     })
+//   }
+// });
+
+
+// API DELETE Route 
+app.delete('/api/notes/:id', (req, res) => {
+  let deleteNote=req.params.id;
+  readFileAsync("./db/db.json", "utf8").then((data) => {
+    let savedNotes = JSON.parse(data);
+    let newSave =[]
+    console.log(savedNotes)
+    // const newNotes = []
+    for (let i = 0; i < savedNotes.length; i++) {
+      if (deleteNote!== savedNotes[i].id) {
+        newSave.push(savedNotes[i])
+      }
+    }
+    return newSave
+  }).then((newSave) => {
+    writeFileAsync("./db/db.json", JSON.stringify(newSave))
+    res.json(newSave);
+  })
+});
+
+
 
 // GET route for miscelanious routes
 app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, '/develop/public/notes.html'))
+  res.sendFile(path.join(__dirname, './public/index.html'))
 );
+
+
+
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
